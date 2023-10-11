@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 public class AtivacaoClienteService {
-	@Qualifier("sms")
+	@Qualifier("urgente")
 	@Autowired(required = false)
 	private Notificador notificador;
 	
