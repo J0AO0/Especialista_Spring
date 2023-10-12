@@ -11,3 +11,4 @@ public class ServiceConfig {
         return new AtivacaoClienteService();
     }
 }
+//fix
