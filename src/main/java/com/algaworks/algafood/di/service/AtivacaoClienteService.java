@@ -4,6 +4,7 @@ import com.algaworks.algafood.di.notificacao.NivelUrgencia;
 import com.algaworks.algafood.di.notificacao.TipoDoNotificador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.di.modelo.Cliente;
@@ -13,28 +14,17 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.List;
 
-//@Component
+@Component
 public class AtivacaoClienteService {
-	@TipoDoNotificador(NivelUrgencia.NORMAL)
-//	@Qualifier("urgente")
 	@Autowired
-	private Notificador notificador;
+	private ApplicationEventPublisher eventPublisher;
 
-//	@PostConstruct
-	public void init(){
-		System.out.println("INIT " + notificador);
-	}
-
-//	@PreDestroy
-	public void destroy(){
-		System.out.println("DESTROY");
-	}
 	public void ativar(Cliente cliente) {
 		cliente.ativar();
 
-			notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
-	}
+        eventPublisher.publishEvent(new ClienteAtivadoEvent(cliente));
 
+	}
 }
 
 //fix
